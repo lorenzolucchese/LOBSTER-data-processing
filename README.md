@@ -29,10 +29,10 @@ The data is hence returned in both the 'TICKER_equidistant_log_returns' folder a
 
 Supplementary files produced, to check before using the data, are:
 	
-'nmin_skipped_messages': message files which pandas didn't manage read
+	'nmin_skipped_messages': message files which pandas didn't manage read
 	
-'nmin_skipped_orderbook': orderbook files which pandas didn't manage read
+	'nmin_skipped_orderbook': orderbook files which pandas didn't manage read
 
-'nmin_empty_time_intervals': trading days where data is scarse (i.e. there are time-intervals without transactions and the price is henced assumed to not change).
+	'nmin_empty_time_intervals': trading days where data is scarse (i.e. there are time-intervals without transactions and the price is henced assumed to not change).
 
-'nmin_opening_closing_times': trading days with "strange" opening and closing times (i.e. which are not 9:30-16:00)
+	'nmin_opening_closing_times': trading days with "strange" opening and closing times (i.e. which are not 9:30-16:00)
