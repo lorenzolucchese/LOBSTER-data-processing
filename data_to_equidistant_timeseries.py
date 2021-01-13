@@ -80,7 +80,7 @@ for orderbook_name in csv_orderbook:
     assert (len(df_message) == len(df_orderbook))  
 
     #convert df_message.index to seconds since midnight and add this to the current date
-    seconds_since_midnight = pd.to_timedelta(df_message[0], unit = 'S')
+    seconds_since_midnight = pd.to_timedelta(df_message[0], unit = 'S', errors="coerce")
     timeindex_ = seconds_since_midnight.values + pd.Series(date).repeat(repeats = len(seconds_since_midnight))
     
     # find the index of the last order in every n-minute batch (resampling) and
@@ -98,7 +98,8 @@ for orderbook_name in csv_orderbook:
     
     # compute the n-min equidistant microprices and label them with the appropriate time index
     df_microprices =  (df_orderbook_nmin['ASKp1'] * df_orderbook_nmin['ASKs1'] + df_orderbook_nmin['BIDp1'] * df_orderbook_nmin['BIDs1']) / (df_orderbook_nmin['ASKs1'] + df_orderbook_nmin['BIDs1'])
-    df_microprices.index = pd.to_timedelta(range(int(market_open*60//nmin), int(market_close*60//nmin) + 1), unit='m') + pd.Series(date).repeat(repeats = int(round((market_close-market_open)*60)//nmin)+1)
+    market_open_minutes = range(int(market_open*60), int(market_close*60) + nmin, nmin)
+    df_microprices.index = pd.to_timedelta(market_open_minutes, unit='m') + pd.Series(date).repeat(repeats = len(market_open_minutes))
     
     #keep track of market opening and closing time if its not 9:30 - 16:00
     if not(market_open == 9.5 and market_close) == 16:
